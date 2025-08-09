@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas & Ink - Documenting the World</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'pulse-slow': 'pulse 2s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <!-- Header Component -->
+        <app-header></app-header>
+
+        <!-- Hero Section -->
+        <hero-section></hero-section>
+
+        <!-- What We Offer Section -->
+        <features-section></features-section>
+
+        <!-- Mission Section -->
+        <mission-section></mission-section>
+
+        <!-- Testimonials Section -->
+        <testimonials-section></testimonials-section>
+
+        <!-- Footer Component -->
+        <app-footer></app-footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // Reusable Button Component
+        const AppButton = {
+            props: {
+                variant: {
+                    type: String,
+                    default: 'primary'
+                },
+                size: {
+                    type: String,
+                    default: 'md'
+                },
+                href: String,
+                tag: {
+                    type: String,
+                    default: 'button'
+                }
+            },
+            computed: {
+                classes() {
+                    const variants = {
+                        primary: 'bg-yellow-500 hover:bg-yellow-600 text-black font-semibold',
+                        secondary: 'bg-purple-600 hover:bg-purple-700 text-white font-semibold',
+                        outline: 'border-2 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white font-semibold'
+                    };
+                    const sizes = {
+                        sm: 'px-4 py-2 text-sm',
+                        md: 'px-6 py-3 text-base',
+                        lg: 'px-8 py-4 text-lg'
+                    };
+                    return `${variants[this.variant]} ${sizes[this.size]} rounded-lg transition-all duration-300 transform hover:scale-105`;
+                }
+            },
+            template: `
+                <component :is="tag" :class="classes" :href="href">
+                    <slot></slot>
+                </component>
+            `
+        };
+
+        // Card Component
+        const FeatureCard = {
+            props: ['icon', 'title', 'description'],
+            template: `
+                <div class="bg-white rounded-xl p-8 border-2 border-purple-200 text-center transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i :class="icon" class="text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">{{ title }}</h3>
+                    <p class="text-gray-600 leading-relaxed">{{ description }}</p>
+                </div>
+            `
+        };
+
+        // Testimonial Card Component
+        const TestimonialCard = {
+            props: ['testimonial'],
+            template: `
+                <div class="bg-white rounded-xl p-8 shadow-lg border border-gray-100 h-full flex flex-col transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
+                    <!-- Stars Rating -->
+                    <div class="flex mb-4">
+                        <i v-for="n in testimonial.rating" :key="n" class="fas fa-star text-yellow-500 mr-1"></i>
+                        <i v-for="n in (5 - testimonial.rating)" :key="'empty-' + n" class="far fa-star text-gray-300 mr-1"></i>
+                    </div>
+                    
+                    <!-- Testimonial Text -->
+                    <blockquote class="text-gray-600 italic mb-6 flex-grow leading-relaxed">
+                        "{{ testimonial.text }}"
+                    </blockquote>
+                    
+                    <!-- Author Info -->
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-purple-600 font-bold text-lg">{{ testimonial.author.charAt(0) }}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">{{ testimonial.author }}</h4>
+                            <p class="text-sm text-gray-500">{{ testimonial.role }} • {{ testimonial.country }}</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // Header Component
+        const AppHeader = {
+            components: { AppButton },
+            data() {
+                return {
+                    isMenuOpen: false,
+                    navItems: ['Home', 'Explore', 'About Us']
+                };
+            },
+            methods: {
+                toggleMenu() {
+                    this.isMenuOpen = !this.isMenuOpen;
+                }
+            },
+            template: `
+                <header class="bg-white shadow-sm sticky top-0 z-50">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex justify-between items-center py-4">
+                            <!-- Logo -->
+                            <div class="text-2xl font-bold text-gray-800">
+                                Atlas & Ink
+                            </div>
+                            
+                            <!-- Desktop Navigation -->
+                            <nav class="hidden md:flex space-x-8">
+                                <a v-for="item in navItems" :key="item" 
+                                   href="#" 
+                                   class="text-gray-700 hover:text-purple-600 transition-colors duration-300">
+                                    {{ item }}
+                                </a>
+                            </nav>
+
+                            <!-- Mobile Menu Button -->
+                            <button @click="toggleMenu" class="md:hidden p-2">
+                                <i class="fas fa-bars text-xl"></i>
+                            </button>
+                        </div>
+
+                        <!-- Mobile Menu -->
+                        <div v-show="isMenuOpen" class="md:hidden pb-4">
+                            <nav class="flex flex-col space-y-3">
+                                <a v-for="item in navItems" :key="item" 
+                                   href="#" 
+                                   class="text-gray-700 hover:text-purple-600 transition-colors duration-300">
+                                    {{ item }}
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            `
+        };
+
+        // Hero Section Component
+        const HeroSection = {
+            components: { AppButton },
+            template: `
+                <section class="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 py-20 relative overflow-hidden">
+                    <!-- Background Pattern -->
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-20 left-10 w-32 h-32 bg-white rounded-full"></div>
+                        <div class="absolute bottom-20 right-20 w-24 h-24 bg-white rounded-full"></div>
+                        <div class="absolute top-1/2 right-1/3 w-16 h-16 bg-white rounded-full"></div>
+                    </div>
+                    
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+                        <!-- Left Content -->
+                        <div class="text-white space-y-6">
+                            <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+                                Documenting the <span class="text-yellow-300">world</span><br>
+                                one country at a time
+                            </h1>
+                            <p class="text-xl text-purple-100 max-w-lg">
+                                Your first stop before the journey begins
+                            </p>
+                            <div class="pt-4">
+                                <app-button variant="primary" size="lg">
+                                    Explore Now
+                                </app-button>
+                            </div>
+                        </div>
+
+                        <!-- Right Content - Luggage Illustration -->
+                        <div class="relative flex justify-center lg:justify-end">
+                            <div class="animate-pulse-slow">
+                                <div class="relative">
+                                    <!-- Suitcase -->
+                                    <div class="w-64 h-48 bg-gray-800 rounded-lg relative">
+                                        <!-- Handle -->
+                                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-16 h-6 bg-gray-700 rounded-full"></div>
+                                        <!-- Stickers -->
+                                        <div class="absolute top-4 left-4 w-8 h-8 bg-red-500 rounded transform rotate-12"></div>
+                                        <div class="absolute top-8 right-6 w-6 h-6 bg-blue-500 rounded-full"></div>
+                                        <div class="absolute bottom-6 left-6 w-10 h-6 bg-green-500 rounded"></div>
+                                        <div class="absolute bottom-4 right-4 w-8 h-8 bg-yellow-400 rounded transform -rotate-12"></div>
+                                        <!-- Airplane sticker -->
+                                        <div class="absolute top-12 left-12">
+                                            <i class="fas fa-plane text-white text-2xl"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Wheels -->
+                                    <div class="absolute -bottom-2 left-8 w-4 h-4 bg-gray-600 rounded-full"></div>
+                                    <div class="absolute -bottom-2 right-8 w-4 h-4 bg-gray-600 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // Features Section Component
+        const FeaturesSection = {
+            components: { FeatureCard },
+            data() {
+                return {
+                    features: [
+                        {
+                            icon: 'fas fa-globe',
+                            title: 'Global Snapshots',
+                            description: 'Key details about every recognized country, always updated'
+                        },
+                        {
+                            icon: 'fas fa-plane',
+                            title: 'Plan Your Adventure',
+                            description: 'Insights that help you prepare or inspire your next trip.'
+                        },
+                        {
+                            icon: 'fas fa-search',
+                            title: 'Discover Cultures',
+                            description: 'From languages to local currencies, learn what makes each place unique'
+                        }
+                    ]
+                };
+            },
+            template: `
+                <section class="py-20 bg-gray-50">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="text-4xl font-bold text-gray-800 mb-4">What We Offer</h2>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <feature-card 
+                                v-for="feature in features" 
+                                :key="feature.title"
+                                :icon="feature.icon"
+                                :title="feature.title"
+                                :description="feature.description">
+                            </feature-card>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // Mission Section Component
+        const MissionSection = {
+            template: `
+                <section class="py-20 bg-white">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                        <h2 class="text-4xl font-bold text-gray-800 mb-8">Our Mission</h2>
+                        <div class="text-lg text-gray-600 leading-relaxed space-y-4">
+                            <p>
+                                At <span class="text-purple-600 font-semibold">Atlas & Ink</span>, we believe the world is best understood one country at a time.
+                            </p>
+                            <p>
+                                Our mission is to bring you reliable information, stunning visuals,
+                                and fascinating cultural facts whether you're a traveler,
+                                student, or just curious about the world.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // Testimonials Section Component
+        const TestimonialsSection = {
+            components: { TestimonialCard },
+            data() {
+                return {
+                    currentIndex: 0,
+                    autoplayInterval: null,
+                    testimonials: [
+                        {
+                            id: 1,
+                            author: "Sarah Johnson",
+                            role: "Travel Blogger",
+                            country: "United States",
+                            rating: 5,
+                            text: "Atlas & Ink has been my go-to resource for travel planning. The cultural insights and detailed country information helped me prepare for my Southeast Asia trip perfectly. I discovered hidden gems I would never have found otherwise!"
+                        },
+                        {
+                            id: 2,
+                            author: "Marco Rodriguez",
+                            role: "International Student",
+                            country: "Spain",
+                            rating: 5,
+                            text: "As a student studying abroad, this platform gave me everything I needed to understand local customs and traditions. The information is accurate, up-to-date, and presented in a way that's easy to understand."
+                        },
+                        {
+                            id: 3,
+                            author: "Priya Patel",
+                            role: "Digital Nomad",
+                            country: "India",
+                            rating: 5,
+                            text: "Working remotely from different countries requires understanding local currencies, time zones, and business cultures. Atlas & Ink provides all this information in one place. It's become essential for my nomadic lifestyle."
+                        },
+                        {
+                            id: 4,
+                            author: "James Thompson",
+                            role: "Geography Teacher",
+                            country: "United Kingdom",
+                            rating: 4,
+                            text: "I use Atlas & Ink as a teaching resource for my geography classes. The visual presentations and comprehensive country profiles make learning engaging for my students. It's an excellent educational tool."
+                        },
+                        {
+                            id: 5,
+                            author: "Emma Chen",
+                            role: "Business Consultant",
+                            country: "Canada",
+                            rating: 5,
+                            text: "Before expanding our business internationally, Atlas & Ink helped us understand market conditions, cultural nuances, and business practices in different countries. The insights were invaluable for our success."
+                        },
+                        {
+                            id: 6,
+                            author: "Ahmed Hassan",
+                            role: "Photographer",
+                            country: "Egypt",
+                            rating: 5,
+                            text: "The stunning visuals and detailed location information helped me plan my photography expeditions across Africa. I discovered breathtaking locations and learned about local photography regulations through their platform."
+                        }
+                    ]
+                };
+            },
+            computed: {
+                visibleTestimonials() {
+                    // Show 3 testimonials at a time on desktop, 1 on mobile
+                    return this.testimonials.slice(this.currentIndex, this.currentIndex + 3);
+                },
+                totalSlides() {
+                    return Math.ceil(this.testimonials.length / 3);
+                }
+            },
+            methods: {
+                nextSlide() {
+                    this.currentIndex = (this.currentIndex + 3) % this.testimonials.length;
+                },
+                prevSlide() {
+                    this.currentIndex = this.currentIndex === 0 
+                        ? this.testimonials.length - 3 
+                        : this.currentIndex - 3;
+                },
+                goToSlide(index) {
+                    this.currentIndex = index * 3;
+                },
+                startAutoplay() {
+                    this.autoplayInterval = setInterval(() => {
+                        this.nextSlide();
+                    }, 5000);
+                },
+                stopAutoplay() {
+                    if (this.autoplayInterval) {
+                        clearInterval(this.autoplayInterval);
+                    }
+                }
+            },
+            mounted() {
+                this.startAutoplay();
+            },
+            beforeUnmount() {
+                this.stopAutoplay();
+            },
+            template: `
+                <section class="py-20 bg-gray-50" @mouseenter="stopAutoplay" @mouseleave="startAutoplay">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Testimonials</h2>
+                            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                                Hear what our community says about their experience with Atlas & Ink
+                            </p>
+                        </div>
+
+                        <!-- Testimonials Grid -->
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                            <testimonial-card 
+                                v-for="testimonial in visibleTestimonials" 
+                                :key="testimonial.id"
+                                :testimonial="testimonial">
+                            </testimonial-card>
+                        </div>
+
+                        <!-- Navigation Controls -->
+                        <div class="flex justify-center items-center space-x-6">
+                            <!-- Previous Button -->
+                            <button @click="prevSlide" 
+                                    class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-purple-50 transition-colors duration-300">
+                                <i class="fas fa-chevron-left text-purple-600"></i>
+                            </button>
+
+                            <!-- Dots Indicator -->
+                            <div class="flex space-x-2">
+                                <button v-for="(slide, index) in totalSlides" 
+                                        :key="index"
+                                        @click="goToSlide(index)"
+                                        class="w-3 h-3 rounded-full transition-colors duration-300"
+                                        :class="currentIndex === index * 3 ? 'bg-purple-600' : 'bg-gray-300'">
+                                </button>
+                            </div>
+
+                            <!-- Next Button -->
+                            <button @click="nextSlide" 
+                                    class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-purple-50 transition-colors duration-300">
+                                <i class="fas fa-chevron-right text-purple-600"></i>
+                            </button>
+                        </div>
+
+                        <!-- Statistics -->
+                        <div class="mt-16 grid md:grid-cols-3 gap-8 text-center">
+                            <div class="bg-white rounded-xl p-6 shadow-lg transform transition-transform duration-300 hover:-translate-y-1">
+                                <div class="text-3xl font-bold text-purple-600 mb-2">10,000+</div>
+                                <div class="text-gray-600">Happy Travelers</div>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-lg transform transition-transform duration-300 hover:-translate-y-1">
+                                <div class="text-3xl font-bold text-purple-600 mb-2">195</div>
+                                <div class="text-gray-600">Countries Covered</div>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-lg transform transition-transform duration-300 hover:-translate-y-1">
+                                <div class="text-3xl font-bold text-purple-600 mb-2">4.9/5</div>
+                                <div class="text-gray-600">Average Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // Footer Component
+        const AppFooter = {
+            data() {
+                return {
+                    footerData: {
+                        company: {
+                            name: 'Atlas & Ink',
+                            address: 'Boulevard St, Los Angeles, 90001'
+                        },
+                        pages: ['Home', 'Explore', 'About Us'],
+                        services: ['Contact Us', 'Term Conditions', 'Privacy Policy'],
+                        socialMedia: [
+                            { icon: 'fab fa-instagram', url: '#' },
+                            { icon: 'fab fa-linkedin', url: '#' },
+                            { icon: 'fab fa-twitter', url: '#' },
+                            { icon: 'fab fa-youtube', url: '#' }
+                        ]
+                    }
+                };
+            },
+            template: `
+                <footer class="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white py-16">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid md:grid-cols-4 gap-8">
+                            <!-- Company Info -->
+                            <div class="space-y-4">
+                                <h3 class="text-2xl font-bold">{{ footerData.company.name }}</h3>
+                                <p class="text-purple-200">{{ footerData.company.address }}</p>
+                            </div>
+
+                            <!-- Pages -->
+                            <div>
+                                <h4 class="text-lg font-semibold mb-4">Pages</h4>
+                                <ul class="space-y-2">
+                                    <li v-for="page in footerData.pages" :key="page">
+                                        <a href="#" class="text-purple-200 hover:text-white transition-colors duration-300">
+                                            {{ page }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Service & Support -->
+                            <div>
+                                <h4 class="text-lg font-semibold mb-4">Service & Support</h4>
+                                <ul class="space-y-2">
+                                    <li v-for="service in footerData.services" :key="service">
+                                        <a href="#" class="text-purple-200 hover:text-white transition-colors duration-300">
+                                            {{ service }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Social Media -->
+                            <div>
+                                <h4 class="text-lg font-semibold mb-4">Our Social Media</h4>
+                                <div class="flex space-x-4">
+                                    <a v-for="social in footerData.socialMedia" 
+                                       :key="social.icon" 
+                                       :href="social.url"
+                                       class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all duration-300 transform hover:scale-110">
+                                        <i :class="social.icon" class="text-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            `
+        };
+
+        // Main App
+        createApp({
+            components: {
+                AppHeader,
+                HeroSection,
+                FeaturesSection,
+                MissionSection,
+                TestimonialsSection,
+                AppFooter,
+                AppButton,
+                FeatureCard,
+                TestimonialCard
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
