@@ -2,10 +2,11 @@
 <script setup lang="ts">
 import FeatureCard from '../common/FeatureCard.vue'
 import { faGlobe, faPlane, faSearch } from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 // Definisikan tipe untuk props FeatureCard
 interface Feature {
-  icon: string // pakai string karena kamu kirim class seperti "fas fa-globe"
+  icon: IconDefinition
   title: string
   description: string
 }
