@@ -1,7 +1,7 @@
 // src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
-import ExplorePage from '../pages/ExplorepAGE.vue'
+import ExplorePage from '../pages/ExplorePage.vue'
 import AboutUsPage from '../pages/AboutPage.vue'
 
 
