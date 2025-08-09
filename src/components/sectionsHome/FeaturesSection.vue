@@ -1,6 +1,6 @@
 <!-- FeaturesSection.vue -->
 <script setup lang="ts">
-import FeatureCard from '../common/FeatureCard.vue'
+import FeatureCard from './FeatureCard.vue'
 import { faGlobe, faPlane, faSearch } from '@fortawesome/free-solid-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 

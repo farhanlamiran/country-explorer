@@ -1,7 +1,7 @@
 <!-- TestimonialsSection.vue -->
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import TestimonialCard from '../common/TestimonialCard.vue'
+import TestimonialCard from './TestimonialCard.vue'
 
 interface Testimonial {
   id: number

@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <!-- Navigation -->
-     <AppNavbar/>
+     <header class="fixed top-0 left-0 right-0 h-16 bg-transparent z-50">
+  <!-- Navbar -->
+  <AppNavbar/>
+</header>
     <router-view />
     <AppFooter/>
   </div>

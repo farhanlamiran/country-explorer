@@ -2,7 +2,7 @@
 
 <template>
   <section
-    class="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 py-20 relative overflow-hidden"
+    class="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 py-30 relative overflow-hidden"
   >
     <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-10">

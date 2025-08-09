@@ -1,10 +1,17 @@
 <template>
-  <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <!-- Brand -->
-        <div class="flex-shrink-0">
-          <h1 class="text-2xl font-bold text-blue-600">Atlas & Ink</h1>
+  <nav
+    :class="[
+      'sticky top-0 z-50 transition-colors duration-300',
+      scrolled
+        ? 'bg-white/30 backdrop-blur-md border-b border-gray-200 shadow-md'
+        : 'bg-transparent border-none shadow-none'
+    ]"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="flex justify-between items-center py-4">
+        <!-- Logo -->
+        <div class="text-2xl font-bold text-gray-800">
+          Atlas & Ink
         </div>
 
         <!-- Desktop Navigation -->
@@ -28,7 +35,12 @@
             class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
             aria-label="Toggle mobile menu"
           >
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
               <path
                 v-if="!mobileMenuOpen"
                 stroke-linecap="round"
@@ -47,10 +59,15 @@
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Mobile Navigation -->
-      <div v-if="mobileMenuOpen" class="md:hidden">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-100">
+    <!-- Mobile Navigation overlay -->
+    <transition name="fade">
+      <div
+        v-if="mobileMenuOpen"
+        class="md:hidden absolute top-full left-0 w-full bg-white/30 backdrop-blur-md border-t border-gray-200 shadow-lg z-50"
+      >
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <router-link
             v-for="link in NAV_LINKS"
             :key="link.name"
@@ -62,33 +79,45 @@
           </router-link>
         </div>
       </div>
-    </div>
+    </transition>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { NavigationLink } from '../../types'
-import { NAV_LINKS } from '@/data/dummyData'
-
-/**
- * AppNavbar Component
- * Main navigation component with responsive design
- */
+import { ref, onMounted, onUnmounted } from "vue"
+import { NAV_LINKS } from "@/data/dummyData"
 
 const mobileMenuOpen = ref(false)
+const scrolled = ref(false)
 
-/**
- * Toggle mobile menu visibility
- */
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
-
-/**
- * Close mobile menu
- */
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
 }
+
+const handleScroll = () => {
+  scrolled.value = window.scrollY > 0
+}
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll)
+  handleScroll() // cek posisi awal saat mount
+})
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll)
+})
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
