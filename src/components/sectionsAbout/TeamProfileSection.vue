@@ -26,20 +26,8 @@ defineProps<{
       <!-- Tambah bubble sesuai selera -->
     </div>
       <div class="text-center">
-        <div class="relative inline-block mb-12">
-          <div class="w-60 h-60 mx-auto relative">
-            <img
-              :src="founder.image"
-              :alt="founder.name"
-              class="w-full h-full rounded-3xl object-cover shadow-2xl"
-            >
-          </div>
-        </div>
 
-        <h3 class="text-6xl text-white/80 mb-4">{{ founder.name }}</h3>
-        <div class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white/80 font-semibold text-lg mb-8">
-          {{ founder.position }}
-        </div>
+        <h3 class="text-6xl text-white mb-4">{{ founder.name }}</h3>
         <p
   class="text-xl text-white/65 max-w-3xl mx-auto leading-relaxed glassmorphism px-12 py-6 rounded-2xl "
 >

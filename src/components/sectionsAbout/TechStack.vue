@@ -14,12 +14,12 @@ defineProps<{
 </script>
 
 <template>
-  <section class="py-24 bg-gradient-to-br from-green-50 via-white to-green-100">
+  <section class="pt-20 pb-24 bg-gradient-to-br from-green-50 via-white to-green-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-5xl font-black text-gray-900 mb-6">Tech Stack</h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          Atlas & Ink dibangun dengan teknologi modern dan tools terdepan
+          Atlas & Ink is built with modern technologies and cutting-edge tools
         </p>
       </div>
 
@@ -32,10 +32,10 @@ defineProps<{
           <div
             class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center shadow-lg"
             :class="[
-              index === 0 ? 'bg-gradient-to-br from-green-400 to-green-500' : '',
-              index === 1 ? 'bg-gradient-to-br from-green-500 to-green-600' : '',
-              index === 2 ? 'bg-gradient-to-br from-green-300 to-green-500' : '',
-              index === 3 ? 'bg-gradient-to-br from-green-600 to-green-700' : ''
+              index === 0 ? 'bg-gradient-to-br from-green-300 to-green-200' : '',
+              index === 1 ? 'bg-gradient-to-br from-green-300 to-green-200' : '',
+              index === 2 ? 'bg-gradient-to-br from-green-300 to-green-200' : '',
+              index === 3 ? 'bg-gradient-to-br from-green-300 to-green-200' : ''
             ]"
           >
             <Icon :icon="tech.icon" class="text-white" width="36" height="36" />

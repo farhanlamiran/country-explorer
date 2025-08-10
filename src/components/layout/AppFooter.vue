@@ -1,5 +1,6 @@
 <!-- AppFooter.vue -->
 <script setup lang="ts">
+import { NAV_LINKS } from '@/data/dummyData'
 import { reactive } from 'vue'
 
 interface SocialMedia {
@@ -47,12 +48,12 @@ const footerData = reactive<FooterData>({
         <div clas="pl-50">
           <h4 class="text-lg font-semibold mb-4 pl-15">Pages</h4>
           <ul class="space-y-2 pl-15">
-            <li v-for="page in footerData.pages" :key="page">
-              <a
-                href="#"
+            <li v-for="nav in NAV_LINKS" :key="nav.name">
+              <router-link
+                :to="nav.href"
                 class="text-purple-200 hover:text-white transition-colors duration-300"
-                >{{ page }}</a
-              >
+                >{{ nav.name }}
+                </router-link>
             </li>
           </ul>
         </div>

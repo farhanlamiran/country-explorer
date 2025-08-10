@@ -14,7 +14,7 @@ export const heroData = {
 export const founder = {
   name: 'Atlas & Ink Team',
   position: 'Developer & Designer',
-  bio: 'Tim kreatif yang passionate dalam mengembangkan aplikasi web yang menghubungkan orang-orang dengan informasi negara-negara di seluruh dunia. Kami percaya bahwa pengetahuan geografis dapat memperluas wawasan dan memperkuat koneksi global.',
+  bio: 'A creative team passionate about developing web applications that connect people with information about countries around the world. We believe that geographical knowledge can broaden horizons and strengthen global connections.',
   image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=400&fit=crop&crop=faces'
 };
 
@@ -36,30 +36,14 @@ export const valuesData = {
   subtitle: 'Prinsip yang menjadi fondasi pengembangan Atlas & Ink Country Explorer'
 };
 
-export const values = [
-  {
-    title: 'Akurasi Data',
-    description: 'Mengutamakan keakuratan dan keandalan informasi negara yang disajikan kepada pengguna.',
-    icon: '📊'
-  },
-  {
-    title: 'User Experience',
-    description: 'Menghadirkan pengalaman pengguna yang menyenangkan dan mudah dipahami.',
-    icon: '✨'
-  },
-  {
-    title: 'Global Awareness',
-    description: 'Meningkatkan kesadaran dan pengetahuan tentang keberagaman dunia.',
-    icon: '🌏'
-  }
-];
+
 
 // Technology stack data
 export const technologies = [
-  { name: 'Vue.js', icon: 'logos:vue', description: 'Framework frontend progresif' },
-  { name: 'TypeScript', icon: 'logos:typescript-icon', description: 'Superset JavaScript yang statis' },
-  { name: 'Tailwind CSS', icon: 'logos:tailwindcss-icon', description: 'Utility-first CSS framework' },
-  { name: 'Vite', icon: 'logos:vitejs', description: 'Build tool super cepat' }
+  { name: 'Vue.js', icon: 'logos:vue', description: 'A progressive framework for building user interfaces' },
+  { name: 'TypeScript', icon: 'logos:typescript-icon', description: 'A statically typed superset of JavaScript' },
+  { name: 'Tailwind CSS', icon: 'logos:tailwindcss-icon', description: 'A utility-first CSS framework for rapid UI development' },
+  { name: 'Vite', icon: 'logos:vitejs', description: 'A lightning-fast frontend build tool' }
 ]
 
 
@@ -71,30 +55,3 @@ export const stats = [
   { value: '24/7', label: 'Akses Online' }
 ];
 
-// Social links data
-export const socialLinks = [
-  { name: 'Instagram', href: '#', icon: '📷' },
-  { name: 'LinkedIn', href: '#', icon: '💼' },
-  { name: 'Twitter', href: '#', icon: '🐦' },
-  { name: 'GitHub', href: '#', icon: '💻' }
-];
-
-// Footer data
-export const footerData = {
-  companyName: 'Atlas & Ink',
-  address: 'Digital Platform\nGlobal Access',
-  pagesTitle: 'Halaman',
-  pages: [
-    { name: 'Home', href: '#', current: false },
-    { name: 'Explore Countries', href: '#', current: false },
-    { name: 'About Us', href: '#', current: false }
-  ],
-  supportTitle: 'Layanan & Dukungan',
-  services: [
-    { name: 'API Documentation', href: '#', current: false },
-    { name: 'User Guide', href: '#', current: false },
-    { name: 'Contact Support', href: '#', current: false }
-  ],
-  socialTitle: 'Connect With Us',
-  copyright: '© 2024 Atlas & Ink. Country Explorer Platform.'
-};

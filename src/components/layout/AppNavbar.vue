@@ -79,7 +79,6 @@
             :key="link.name"
             :to="link.href"
             class="block px-3 py-2 text-base font-medium text-gray-800 hover:text-blue-600 transition-colors duration-200"
-            @click="closeMobileMenu"
           >
             {{ link.name }}
           </router-link>
@@ -95,6 +94,7 @@ import { NAV_LINKS } from "@/data/dummyData"
 
 const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
+
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value

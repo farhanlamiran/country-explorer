@@ -6,9 +6,9 @@
   >
     <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-10">
-      <div class="absolute top-30 left-50 w-32 h-32 bg-white rounded-full"></div>
-      <div class="absolute bottom-30 right-59 w-60 h-60 bg-white rounded-full"></div>
-      <div class="absolute top-50 right-110 w-60 h-60 bg-white rounded-full"></div>
+      <div class="absolute top-30 left-50 w-32 h-32 bg-white rounded-full animate-bubble-slow"></div>
+      <div class="absolute bottom-30 right-59 w-60 h-60 bg-white rounded-full animate-bubble-slow"></div>
+      <div class="absolute top-50 right-110 w-60 h-60 bg-white rounded-full animate-bubble-slow"></div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
