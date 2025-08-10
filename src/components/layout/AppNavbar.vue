@@ -1,16 +1,17 @@
 <template>
   <nav
-    :class="[
-      'sticky top-0 z-50 transition-colors duration-300',
-      scrolled
-        ? 'bg-white/30 backdrop-blur-md border-b border-gray-200 shadow-md'
-        : 'bg-transparent border-none shadow-none'
-    ]"
+    class="relative z-auto transition-colors duration-300"
+    :class="scrolled ? 'bg-white  shadow-md' : 'bg-transparent border-none shadow-none'"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       <div class="flex justify-between items-center py-4">
         <!-- Logo -->
-        <div class="text-2xl font-bold text-gray-800">
+        <div
+          :class="[
+            scrolled ? 'text-black/70' : 'text-white/70',
+            'text-3xl transition-colors duration-300'
+          ]"
+        >
           Atlas & Ink
         </div>
 
@@ -21,7 +22,12 @@
               v-for="link in NAV_LINKS"
               :key="link.name"
               :to="link.href"
-              class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              :class="[
+                scrolled
+                  ? 'text-black/70 hover:text-black'
+                  : 'text-white/70 hover:text-yellow-300',
+                'px-3 py-2 text-sm font-medium transition-colors duration-300'
+              ]"
             >
               {{ link.name }}
             </router-link>
@@ -32,7 +38,7 @@
         <div class="md:hidden">
           <button
             @click="toggleMobileMenu"
-            class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+            class="text-white hover:text-yellow-300 focus:outline-none"
             aria-label="Toggle mobile menu"
           >
             <svg
@@ -72,7 +78,7 @@
             v-for="link in NAV_LINKS"
             :key="link.name"
             :to="link.href"
-            class="text-gray-600 hover:text-blue-600 block px-3 py-2 text-base font-medium transition-colors duration-200"
+            class="block px-3 py-2 text-base font-medium text-gray-800 hover:text-blue-600 transition-colors duration-200"
             @click="closeMobileMenu"
           >
             {{ link.name }}
@@ -103,7 +109,7 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll)
-  handleScroll() // cek posisi awal saat mount
+  handleScroll()
 })
 
 onUnmounted(() => {

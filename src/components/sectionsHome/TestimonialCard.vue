@@ -15,7 +15,7 @@ const props = defineProps<{ testimonial: Testimonial }>()
 
 <template>
   <div
-    class="bg-white rounded-xl p-8 shadow-lg border border-gray-100 h-full flex flex-col transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20"
+    class="testimonial-card bg-white rounded-xl p-8 shadow-lg border border-gray-100 h-full flex flex-col transition-all duration-300 ease-out transform shadow-2xl shadow-purple-500/20"
   >
     <!-- Stars Rating -->
     <div class="flex mb-4">
@@ -54,3 +54,9 @@ const props = defineProps<{ testimonial: Testimonial }>()
     </div>
   </div>
 </template>
+
+<style>
+.testimonial-card {
+  transition-timing-function: ease-out;
+}
+</style>

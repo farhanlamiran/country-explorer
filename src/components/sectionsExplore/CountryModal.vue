@@ -29,7 +29,7 @@ useBodyScrollLock(toRef(props, "isOpen"));
       @click.stop
     >
       <!-- Header -->
-      <div class="flex items-center justify-between px-7 pt-8">
+      <div class="flex items-center justify-between px-7 pt-7">
         <button
           @click="$emit('close')"
           class="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"

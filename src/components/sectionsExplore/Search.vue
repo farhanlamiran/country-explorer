@@ -36,7 +36,7 @@ function handleKeyPress(event: KeyboardEvent) {
     <!-- Konten utama -->
     <div class="relative z-10 max-w-7xl mx-auto px-4 pt-30 pb-20 text-center">
       <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">Explore Countries</h1>
-      <p class="text-lg md:text-xl text-gray-700 mb-8">Browse by region or search for a specific country</p>
+      <p class="text-lg md:text-xl text-black/50 mb-8">Browse by region or search for a specific country</p>
 
       <!-- Search -->
       <div class="flex flex-col sm:flex-row justify-center gap-2 max-w-lg mx-auto">

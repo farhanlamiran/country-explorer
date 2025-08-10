@@ -34,19 +34,19 @@ const footerData = reactive<FooterData>({
 </script>
 
 <template>
-  <footer class="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white py-16">
+  <footer class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-4 gap-8">
         <!-- Company Info -->
         <div class="space-y-4">
-          <h3 class="text-2xl font-bold">{{ footerData.company.name }}</h3>
+          <h3 class="text-5xl font-bold">{{ footerData.company.name }}</h3>
           <p class="text-purple-200">{{ footerData.company.address }}</p>
         </div>
 
         <!-- Pages -->
-        <div>
-          <h4 class="text-lg font-semibold mb-4">Pages</h4>
-          <ul class="space-y-2">
+        <div clas="pl-50">
+          <h4 class="text-lg font-semibold mb-4 pl-15">Pages</h4>
+          <ul class="space-y-2 pl-15">
             <li v-for="page in footerData.pages" :key="page">
               <a
                 href="#"

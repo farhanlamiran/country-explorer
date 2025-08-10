@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Atlas & Ink</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.3s;
+        }
+
+        .fade-enter-from, .fade-leave-to {
+            opacity: 0;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <!-- Header Component -->
+        <app-header :navigation="navigation" @toggle-mobile="handleMobileToggle"></app-header>
+
+        <!-- Hero Section Component -->
+        <hero-section :title="heroData.title" :subtitle="heroData.subtitle"></hero-section>
+
+        <!-- Team Profile Component -->
+        <team-profile :founder="founder"></team-profile>
+
+        <!-- Content Cards Component -->
+        <content-cards
+            :vision-title="contentData.visionTitle"
+            :vision-content="contentData.visionContent"
+            :mission-title="contentData.missionTitle"
+            :mission-items="contentData.missionItems">
+        </content-cards>
+
+        <!-- Values Section Component -->
+        <values-section
+            :title="valuesData.title"
+            :subtitle="valuesData.subtitle"
+            :values="values">
+        </values-section>
+
+        <!-- Stats Section Component -->
+        <stats-section :stats="stats"></stats-section>
+
+        <!-- Footer Component -->
+        <app-footer
+            :company-name="footerData.companyName"
+            :address="footerData.address"
+            :pages-title="footerData.pagesTitle"
+            :pages="footerData.pages"
+            :support-title="footerData.supportTitle"
+            :services="footerData.services"
+            :social-title="footerData.socialTitle"
+            :social-links="socialLinks"
+            :copyright="footerData.copyright">
+        </app-footer>
+    </div>
+
+    <script>
+        const { createApp, ref, reactive } = Vue;
+
+        // AppHeader Component
+        const AppHeader = {
+            props: {
+                navigation: {
+                    type: Array,
+                    required: true
+                }
+            },
+            emits: ['toggle-mobile'],
+            setup(props, { emit }) {
+                const mobileMenuOpen = ref(false);
+
+                const toggleMobileMenu = () => {
+                    mobileMenuOpen.value = !mobileMenuOpen.value;
+                    emit('toggle-mobile', mobileMenuOpen.value);
+                };
+
+                return {
+                    mobileMenuOpen,
+                    toggleMobileMenu
+                };
+            },
+            template: `
+                <header class="bg-white shadow-sm">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex justify-between items-center py-6">
+                            <div class="flex items-center">
+                                <h1 class="text-2xl font-bold text-gray-900">Atlas & Ink</h1>
+                            </div>
+                            <nav class="hidden md:block">
+                                <div class="ml-10 flex items-baseline space-x-8">
+                                    <a
+                                        v-for="item in navigation"
+                                        :key="item.name"
+                                        :href="item.href"
+                                        class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                                        :class="{ 'text-gray-900 font-semibold': item.current }"
+                                    >
+                                        {{ item.name }}
+                                    </a>
+                                </div>
+                            </nav>
+                            <button @click="toggleMobileMenu" class="md:hidden">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <transition name="fade">
+                        <div v-if="mobileMenuOpen" class="md:hidden">
+                            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                                <a
+                                    v-for="item in navigation"
+                                    :key="item.name"
+                                    :href="item.href"
+                                    class="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+                                    :class="{ 'text-gray-900 font-semibold': item.current }"
+                                >
+                                    {{ item.name }}
+                                </a>
+                            </div>
+                        </div>
+                    </transition>
+                </header>
+            `
+        };
+
+        // HeroSection Component
+        const HeroSection = {
+            props: {
+                title: {
+                    type: String,
+                    required: true
+                },
+                subtitle: {
+                    type: String,
+                    required: true
+                }
+            },
+            template: `
+                <section class="bg-gradient-to-r from-green-400 to-green-500 py-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center">
+                            <h2 class="text-4xl font-bold text-white mb-4">{{ title }}</h2>
+                            <p class="text-xl text-green-100 max-w-3xl mx-auto">{{ subtitle }}</p>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // TeamProfile Component
+        const TeamProfile = {
+            props: {
+                founder: {
+                    type: Object,
+                    required: true
+                }
+            },
+            template: `
+                <section class="py-16 bg-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12">
+                            <div class="relative inline-block">
+                                <img
+                                    :src="founder.image"
+                                    :alt="founder.name"
+                                    class="w-32 h-32 rounded-full mx-auto mb-6 shadow-lg object-cover"
+                                >
+                                <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white"></div>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ founder.name }}</h3>
+                            <p class="text-lg text-green-600 mb-4">{{ founder.position }}</p>
+                            <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">{{ founder.bio }}</p>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // ContentCards Component
+        const ContentCards = {
+            props: {
+                visionTitle: String,
+                visionContent: String,
+                missionTitle: String,
+                missionItems: Array
+            },
+            template: `
+                <section class="py-16 bg-gray-50">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Vision Card -->
+                            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                                <div class="h-48 bg-gradient-to-br from-blue-400 to-purple-500"></div>
+                                <div class="p-8">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-gray-900">{{ visionTitle }}</h3>
+                                    </div>
+                                    <p class="text-gray-600 leading-relaxed">{{ visionContent }}</p>
+                                </div>
+                            </div>
+
+                            <!-- Mission Card -->
+                            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                                <div class="h-48 bg-gradient-to-br from-green-400 to-teal-500"></div>
+                                <div class="p-8">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-gray-900">{{ missionTitle }}</h3>
+                                    </div>
+                                    <ul class="text-gray-600 space-y-2">
+                                        <li v-for="item in missionItems" :key="item" class="flex items-start">
+                                            <span class="text-green-500 mr-2">•</span>
+                                            {{ item }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // ValuesSection Component
+        const ValuesSection = {
+            props: {
+                title: String,
+                subtitle: String,
+                values: Array
+            },
+            template: `
+                <section class="py-16 bg-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-12">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-4">{{ title }}</h2>
+                            <p class="text-xl text-gray-600 max-w-3xl mx-auto">{{ subtitle }}</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div
+                                v-for="value in values"
+                                :key="value.title"
+                                class="text-center p-6 rounded-lg hover:shadow-md transition-shadow"
+                            >
+                                <div class="w-16 h-16 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-2xl">{{ value.icon }}</span>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-3">{{ value.title }}</h3>
+                                <p class="text-gray-600">{{ value.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // StatsSection Component
+        const StatsSection = {
+            props: {
+                stats: Array
+            },
+            template: `
+                <section class="py-16 bg-gradient-to-r from-green-400 to-green-500">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                            <div
+                                v-for="stat in stats"
+                                :key="stat.label"
+                                class="text-white"
+                            >
+                                <div class="text-4xl font-bold mb-2">{{ stat.value }}</div>
+                                <div class="text-green-100 text-lg">{{ stat.label }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // AppFooter Component
+        const AppFooter = {
+            props: {
+                companyName: String,
+                address: String,
+                pagesTitle: String,
+                pages: Array,
+                supportTitle: String,
+                services: Array,
+                socialTitle: String,
+                socialLinks: Array,
+                copyright: String
+            },
+            template: `
+                <footer class="bg-purple-600 text-white py-12">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                            <!-- Company Info -->
+                            <div class="md:col-span-1">
+                                <h3 class="text-2xl font-bold mb-4">{{ companyName }}</h3>
+                                <p class="text-purple-200 mb-4" style="white-space: pre-line;">{{ address }}</p>
+                            </div>
+
+                            <!-- Pages -->
+                            <div>
+                                <h4 class="text-lg font-semibold mb-4">{{ pagesTitle }}</h4>
+                                <ul class="space-y-2">
+                                    <li v-for="page in pages" :key="page.name">
+                                        <a :href="page.href" class="text-purple-200 hover:text-white transition-colors">
+                                            {{ page.name }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Service & Support -->
+                            <div>
+                                <h4 class="text-lg font-semibold mb-4">{{ supportTitle }}</h4>
+                                <ul class="space-y-2">
+                                    <li v-for="service in services" :key="service.name">
+                                        <a :href="service.href" class="text-purple-200 hover:text-white transition-colors">
+                                            {{ service.name }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Social Media -->
+                            <div>
+                                <h4 class="text-lg font-semibold mb-4">{{ socialTitle }}</h4>
+                                <div class="flex space-x-4">
+                                    <a
+                                        v-for="social in socialLinks"
+                                        :key="social.name"
+                                        :href="social.href"
+                                        class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center hover:bg-purple-400 transition-colors"
+                                        :title="social.name"
+                                    >
+                                        <span class="text-lg">{{ social.icon }}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-8 border-t border-purple-500 text-center">
+                            <p class="text-purple-200">{{ copyright }}</p>
+                        </div>
+                    </div>
+                </footer>
+            `
+        };
+
+        // Main App
+        const { createApp } = Vue;
+
+        createApp({
+            components: {
+                AppHeader,
+                HeroSection,
+                TeamProfile,
+                ContentCards,
+                ValuesSection,
+                StatsSection,
+                AppFooter
+            },
+            setup() {
+                // Navigation data
+                const navigation = reactive([
+                    { name: 'Home', href: '#', current: false },
+                    { name: 'Explore', href: '#', current: false },
+                    { name: 'About Us', href: '#', current: true }
+                ]);
+
+                // Hero section data
+                const heroData = reactive({
+                    title: 'TENTANG KAMI',
+                    subtitle: 'Mengenal lebih dekat dengan tim Atlas & Ink dan visi kami dalam menciptakan solusi digital yang inovatif'
+                });
+
+                // Founder data
+                const founder = reactive({
+                    name: 'John Anderson',
+                    position: 'Founder & CEO',
+                    bio: 'Seorang visioner dengan pengalaman lebih dari 10 tahun dalam industri teknologi. John memiliki passion yang besar dalam mengembangkan solusi digital yang dapat memberikan dampak positif bagi masyarakat dan dunia bisnis.',
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face'
+                });
+
+                // Content cards data
+                const contentData = reactive({
+                    visionTitle: 'Visi Kami',
+                    visionContent: 'Menjadi perusahaan teknologi terdepan yang menghadirkan solusi digital inovatif untuk memberdayakan bisnis dan komunitas di era digital yang terus berkembang.',
+                    missionTitle: 'Misi Kami',
+                    missionItems: [
+                        'Mengembangkan aplikasi dan platform digital yang user-friendly',
+                        'Memberikan layanan konsultasi teknologi berkualitas tinggi',
+                        'Membangun ekosistem digital yang berkelanjutan'
+                    ]
+                });
+
+                // Values section data
+                const valuesData = reactive({
+                    title: 'Nilai-Nilai Kami',
+                    subtitle: 'Prinsip-prinsip yang menjadi fondasi dalam setiap langkah perjalanan kami'
+                });
+
+                const values = reactive([
+                    {
+                        title: 'Inovasi',
+                        description: 'Selalu mencari cara baru dan kreatif untuk memecahkan masalah kompleks dengan solusi teknologi terdepan.',
+                        icon: '💡'
+                    },
+                    {
+                        title: 'Kualitas',
+                        description: 'Berkomitmen untuk memberikan hasil kerja terbaik dengan standar kualitas tinggi dalam setiap proyek.',
+                        icon: '⭐'
+                    },
+                    {
+                        title: 'Kolaborasi',
+                        description: 'Membangun kemitraan yang kuat dengan klien dan tim untuk mencapai tujuan bersama.',
+                        icon: '🤝'
+                    }
+                ]);
+
+                // Stats data
+                const stats = reactive([
+                    { value: '50+', label: 'Proyek Selesai' },
+                    { value: '25+', label: 'Klien Puas' },
+                    { value: '5+', label: 'Tahun Pengalaman' },
+                    { value: '24/7', label: 'Dukungan' }
+                ]);
+
+                // Social links data
+                const socialLinks = reactive([
+                    { name: 'Instagram', href: '#', icon: '📷' },
+                    { name: 'LinkedIn', href: '#', icon: '💼' },
+                    { name: 'Twitter', href: '#', icon: '🐦' },
+                    { name: 'YouTube', href: '#', icon: '📺' }
+                ]);
+
+                // Footer data
+                const footerData = reactive({
+                    companyName: 'Atlas & Ink',
+                    address: 'Boulevard St, Lost Angeles,\n90001',
+                    pagesTitle: 'Halaman',
+                    pages: [
+                        { name: 'Home', href: '#', current: false },
+                        { name: 'Explore', href: '#', current: false },
+                        { name: 'About Us', href: '#', current: false }
+                    ],
+                    supportTitle: 'Layanan & Dukungan',
+                    services: [
+                        { name: 'Contact Us', href: '#', current: false },
+                        { name: 'Term Conditions', href: '#', current: false },
+                        { name: 'Privacy Policy', href: '#', current: false }
+                    ],
+                    socialTitle: 'Media Sosial Kami',
+                    copyright: '© 2024 Atlas & Ink. Seluruh hak cipta dilindungi.'
+                });
+
+                // Methods
+                const handleMobileToggle = (isOpen) => {
+                    console.log('Mobile menu toggled:', isOpen);
+                };
+
+                return {
+                    navigation,
+                    heroData,
+                    founder,
+                    contentData,
+                    valuesData,
+                    values,
+                    stats,
+                    socialLinks,
+                    footerData,
+                    handleMobileToggle
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
