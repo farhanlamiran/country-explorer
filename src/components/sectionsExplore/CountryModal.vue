@@ -1,35 +1,51 @@
 <script lang="ts" setup>
+/**
+ * CountryDetailsModal.vue
+ *
+ * This component displays detailed information about a country in a modal overlay.
+ * It receives the selected country data and a boolean flag to control visibility.
+ * The component uses a composable to lock body scroll when the modal is open.
+ * It emits a "close" event when the modal or close button is clicked.
+ */
+
 import type { ICountry } from "@/types";
 import { defineProps, defineEmits, toRef } from "vue";
 import { getLanguages, getCurrencies, getTimezones, getCapital } from "@/utils/countryHelpers";
 import { useBodyScrollLock } from "@/composables/useBodyScrollLock";
 
+// Define props with type support:
+// - country: the selected country object or null if none selected
+// - isOpen: boolean indicating if the modal is visible
 const props = defineProps<{
   country: ICountry | null;
   isOpen: boolean;
 }>();
 
+// Define emits for the close event, used to notify parent to close the modal
 const emit = defineEmits<{
   (e: "close"): void;
 }>();
 
-// Pakai composable untuk lock scroll
+// Use composable to lock the body scroll when modal is open to prevent background scrolling
 useBodyScrollLock(toRef(props, "isOpen"));
 </script>
 
-
 <template>
+  <!-- Modal backdrop and container; shown only if modal is open and country data exists -->
   <div
+
     v-if="isOpen && country"
     class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
     @click="$emit('close')"
   >
+    <!-- Modal content box with scrollable area and scale animation -->
     <div
       class="bg-white rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto animate-scale-in"
-      @click.stop
+      @click.stop 
     >
-      <!-- Header -->
+      <!-- Header section with close button, country name, and flag -->
       <div class="flex items-center justify-between px-7 pt-7">
+        <!-- Close button in top-right corner -->
         <button
           @click="$emit('close')"
           class="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
@@ -49,28 +65,27 @@ useBodyScrollLock(toRef(props, "isOpen"));
           </svg>
         </button>
 
+        <!-- Country common name displayed prominently -->
         <h2 class="text-6xl font-bold text-gray-800 pr-12">
           {{ country.name?.common }}
         </h2>
 
+        <!-- Country flag image with alt text for accessibility -->
         <img
           :src="country.flags?.svg || country.flags?.png"
           :alt="`Flag of ${country.name.common}`"
           class="w-40 h-auto rounded shadow"
         />
-
-
       </div>
 
-      <!-- Body -->
+      <!-- Body section with detailed country info -->
       <div class="p-6">
         <div class="space-y-4">
-          <div
-            class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500"
-          >
-            <div
-              class="flex items-center gap-2 font-semibold text-gray-800 mb-2"
-            >
+
+          <!-- Official Name -->
+          <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500">
+            <div class="flex items-center gap-2 font-semibold text-gray-800 mb-2">
+              <!-- Icon representing official name -->
               <svg
                 class="w-4 h-4"
                 fill="none"
@@ -91,12 +106,10 @@ useBodyScrollLock(toRef(props, "isOpen"));
             </div>
           </div>
 
-          <div
-            class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500"
-          >
-            <div
-              class="flex items-center gap-2 font-semibold text-gray-800 mb-2"
-            >
+          <!-- Languages spoken in the country -->
+          <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500">
+            <div class="flex items-center gap-2 font-semibold text-gray-800 mb-2">
+              <!-- Icon representing languages -->
               <svg
                 class="w-4 h-4"
                 fill="none"
@@ -115,12 +128,10 @@ useBodyScrollLock(toRef(props, "isOpen"));
             <div class="text-gray-600">{{ getLanguages(country.languages) }}</div>
           </div>
 
-          <div
-            class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500"
-          >
-            <div
-              class="flex items-center gap-2 font-semibold text-gray-800 mb-2"
-            >
+          <!-- Currency info -->
+          <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500">
+            <div class="flex items-center gap-2 font-semibold text-gray-800 mb-2">
+              <!-- Currency icon -->
               <svg
                 class="w-4 h-4"
                 fill="none"
@@ -139,12 +150,10 @@ useBodyScrollLock(toRef(props, "isOpen"));
             <div class="text-gray-600">{{ getCurrencies(country.currencies) }}</div>
           </div>
 
-          <div
-            class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500"
-          >
-            <div
-              class="flex items-center gap-2 font-semibold text-gray-800 mb-2"
-            >
+          <!-- Timezones -->
+          <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500">
+            <div class="flex items-center gap-2 font-semibold text-gray-800 mb-2">
+              <!-- Clock icon for timezones -->
               <svg
                 class="w-4 h-4"
                 fill="none"
@@ -163,12 +172,10 @@ useBodyScrollLock(toRef(props, "isOpen"));
             <div class="text-gray-600">{{ getTimezones(country.timezones) }}</div>
           </div>
 
-          <div
-            class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500"
-          >
-            <div
-              class="flex items-center gap-2 font-semibold text-gray-800 mb-2"
-            >
+          <!-- Region and Capital -->
+          <div class="bg-gray-50 p-4 rounded-2xl border-l-4 border-yellow-500">
+            <div class="flex items-center gap-2 font-semibold text-gray-800 mb-2">
+              <!-- Location icon -->
               <svg
                 class="w-4 h-4"
                 fill="none"
@@ -199,10 +206,9 @@ useBodyScrollLock(toRef(props, "isOpen"));
           </div>
         </div>
 
-        <!-- Actions -->
-        <div
-          class="flex flex-col sm:flex-row gap-4 mt-6"
-        >
+        <!-- Action buttons: View Maps (opens in new tab) and Close -->
+        <div class="flex flex-col sm:flex-row gap-4 mt-6">
+          <!-- Link to Google Maps if available -->
           <a
             v-if="country.maps?.googleMaps"
             :href="country.maps.googleMaps"
@@ -231,6 +237,8 @@ useBodyScrollLock(toRef(props, "isOpen"));
             </svg>
             View Maps
           </a>
+
+          <!-- Close button -->
           <button
             @click="$emit('close')"
             class="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-xl font-semibold hover:bg-gray-300 hover:-translate-y-1 transition-all duration-300"
@@ -242,5 +250,3 @@ useBodyScrollLock(toRef(props, "isOpen"));
     </div>
   </div>
 </template>
-
-

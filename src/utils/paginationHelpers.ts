@@ -1,4 +1,15 @@
-// helpers/paginationHelper.ts
+/**
+ * Returns the CSS class string for a pagination button based on whether it is the current active page.
+ *
+ * @param page - The page number for the button.
+ * @param currentPage - The currently active page number.
+ * @returns A string containing the combined CSS classes for the button.
+ *
+ * - If the button corresponds to the current page, it includes active styles such as a yellow gradient background,
+ *   darker text, shadow, and a slight upward translation.
+ * - Otherwise, it applies default styles with semi-transparent white background, blur effect, gray text, and
+ *   hover effects for background, shadow, and translation.
+ */
 export function getPageButtonClass(
   page: number,
   currentPage: number

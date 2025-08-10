@@ -1,21 +1,33 @@
 <script lang="ts" setup>
+/**
+ * Props and emits definitions for CountryCard component.
+ *
+ * - Props:
+ *   - country: An object conforming to ICountryCard type, representing a country's data.
+ *
+ * - Emits:
+ *   - 'show-details': Event emitted when the "More Info" button is clicked, sending the country object.
+ */
+
 import { defineProps, defineEmits } from "vue";
 import type { ICountryCard } from "@/types";
 import { formatPopulation, handleImageError } from "@/utils/countryHelpers";
 
-defineProps<{country: ICountryCard;}>();
+// Define the expected props with typing
+defineProps<{ country: ICountryCard }>();
 
-defineEmits<{(e: "show-details", country: ICountryCard): void;}>();
-
+// Define the emitted events with typing
+defineEmits<{ (e: "show-details", country: ICountryCard): void }>();
 </script>
 
 <template>
+  <!-- Card container with styling and hover effects -->
   <div
     class="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 border border-white/20 group"
   >
-    <div
-      class="w-full h-48 rounded-2xl overflow-hidden mb-4 shadow-lg"
-    >
+    <!-- Flag image section with overflow hidden and shadow -->
+    <div class="w-full h-48 rounded-2xl overflow-hidden mb-4 shadow-lg">
+      <!-- Flag image with fallback between SVG and PNG, alt text for accessibility -->
       <img
         :src="country.flags?.svg || country.flags?.png"
         :alt="`Flag of ${country.name.common}`"
@@ -24,6 +36,7 @@ defineEmits<{(e: "show-details", country: ICountryCard): void;}>();
       />
     </div>
 
+    <!-- Country name heading with truncation and tooltip -->
     <h3
       class="text-xl font-bold text-gray-800 mb-3 truncate"
       :title="country.name.common"
@@ -31,6 +44,7 @@ defineEmits<{(e: "show-details", country: ICountryCard): void;}>();
       {{ country.name.common }}
     </h3>
 
+    <!-- Region display with icon -->
     <div class="flex items-center gap-2 text-gray-600 mb-2">
       <svg
         class="w-4 h-4 flex-shrink-0"
@@ -48,6 +62,7 @@ defineEmits<{(e: "show-details", country: ICountryCard): void;}>();
       <span class="truncate">Region: {{ country.region || "N/A" }}</span>
     </div>
 
+    <!-- Population display with icon, formatted using helper -->
     <div class="flex items-center gap-2 text-gray-600 mb-4">
       <svg
         class="w-4 h-4 flex-shrink-0"
@@ -67,6 +82,7 @@ defineEmits<{(e: "show-details", country: ICountryCard): void;}>();
       </span>
     </div>
 
+    <!-- Button that emits 'show-details' event with country data when clicked -->
     <button
       @click="$emit('show-details', country)"
       class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-800 py-3 rounded-xl font-semibold hover:from-yellow-500 hover:to-yellow-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
@@ -75,4 +91,3 @@ defineEmits<{(e: "show-details", country: ICountryCard): void;}>();
     </button>
   </div>
 </template>
-

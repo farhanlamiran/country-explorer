@@ -14,7 +14,6 @@ interface ITechnology {
   description: string
 }
 
-// Technology stack data
 export const TECHNOLOGIES: ITechnology[] = [
   { name: 'Vue.js', icon: 'logos:vue', description: 'A progressive framework for building user interfaces' },
   { name: 'TypeScript', icon: 'logos:typescript-icon', description: 'A statically typed superset of JavaScript' },
