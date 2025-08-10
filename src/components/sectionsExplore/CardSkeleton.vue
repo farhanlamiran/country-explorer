@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+
+</script>
+
 <template>
   <div
     class="grid grid-cols-4 gap-6"
@@ -26,9 +30,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-// Stateless skeleton grid, tanpa props atau emits.
-</script>
+
 
 <style scoped>
 @keyframes shimmer {

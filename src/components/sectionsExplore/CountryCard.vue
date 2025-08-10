@@ -3,13 +3,10 @@ import { defineProps, defineEmits } from "vue";
 import type { ICountryCard } from "@/types";
 import { formatPopulation, handleImageError } from "@/utils/countryHelpers";
 
-const props = defineProps<{
-  country: ICountryCard;
-}>();
+defineProps<{country: ICountryCard;}>();
 
-const emit = defineEmits<{
-  (e: "show-details", country: ICountryCard): void;
-}>();
+defineEmits<{(e: "show-details", country: ICountryCard): void;}>();
+
 </script>
 
 <template>

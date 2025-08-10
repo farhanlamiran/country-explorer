@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 
 <template>
   <section
@@ -12,6 +14,7 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+
       <!-- Left Content -->
       <div class="text-white space-y-6">
         <h1 class="text-5xl font-bold leading-tight">
@@ -29,7 +32,7 @@
         </div>
       </div>
 
-      <!-- Right Content - Luggage Illustration -->
+      <!-- Right Content -->
       <div class="relative flex justify-center lg:justify-end">
         <!-- Gambar Luggage -->
         <img

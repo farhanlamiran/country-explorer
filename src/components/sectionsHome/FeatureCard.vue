@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import type { IFeature } from "@/data/homeData";
+
+defineProps<IFeature>()
+</script>
+
 <template>
   <div
     class="bg-white rounded-xl p-8 border-2 border-purple-200 text-center transition-all duration-300 transform shadow-2xl shadow-purple-500/20"
@@ -15,28 +21,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
-import type { IconDefinition } from "@fortawesome/fontawesome-svg-core"
-
-export default defineComponent({
-  name: "FeatureCard",
-  props: {
-    icon: {
-      type: Object as () => IconDefinition,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-  },
-})
-</script>
 
 <style scoped>
 @keyframes flipY {
@@ -47,7 +31,6 @@ export default defineComponent({
     transform: rotateY(360deg);
   }
 }
-
 .icon-wrapper:hover .flip-icon {
   animation: flipY 1s ease-in-out forwards;
 }

@@ -1,16 +1,6 @@
 <script setup lang="ts">
+import { TECHNOLOGIES } from '@/data/aboutData';
 import { Icon } from '@iconify/vue'
-
-// Type untuk tiap tech
-interface Technology {
-  name: string
-  icon: string // nama icon dari iconify, contoh: 'logos:vue', 'logos:typescript-icon'
-  description: string
-}
-
-defineProps<{
-  technologies: Technology[]
-}>()
 </script>
 
 <template>
@@ -25,7 +15,7 @@ defineProps<{
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div
-          v-for="(tech, index) in technologies"
+          v-for="(tech, index) in TECHNOLOGIES"
           :key="tech.name"
           class="card-hover bg-white p-8 rounded-3xl shadow-lg text-center border border-gray-100"
         >

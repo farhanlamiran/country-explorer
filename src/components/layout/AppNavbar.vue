@@ -1,17 +1,38 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from "vue"
+import { NAV_LINKS } from "@/data/layoutData"
+
+const mobileMenuOpen = ref(false)
+const scrolled = ref(false)
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+const handleScroll = () => {
+  scrolled.value = window.scrollY > 0
+}
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll)
+  handleScroll()
+})
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll)
+})
+</script>
+
 <template>
-  <nav
-    class="relative z-auto transition-colors duration-300"
-    :class="scrolled ? 'bg-white  shadow-md' : 'bg-transparent border-none shadow-none'"
+  <header class="fixed top-0 left-0 right-0 h-16 bg-transparent z-50">
+  <nav class="relative z-auto transition-colors duration-300"
+  :class="scrolled ? 'bg-white  shadow-md' : 'bg-transparent border-none shadow-none'"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       <div class="flex justify-between items-center py-4">
+
         <!-- Logo -->
-        <div
-          :class="[
-            scrolled ? 'text-black/70' : 'text-white/70',
-            'text-3xl transition-colors duration-300'
-          ]"
-        >
+        <div :class="[scrolled ? 'text-black/70' : 'text-white/70','text-3xl transition-colors duration-300']">
           Atlas & Ink
         </div>
 
@@ -71,14 +92,14 @@
     <transition name="fade">
       <div
         v-if="mobileMenuOpen"
-        class="md:hidden absolute top-full left-0 w-full bg-white/30 backdrop-blur-md border-t border-gray-200 shadow-lg z-50"
+        class="md:hidden absolute top-full left-0 w-full bg-white/30 backdrop-blur-md z-50"
       >
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <router-link
             v-for="link in NAV_LINKS"
             :key="link.name"
             :to="link.href"
-            class="block px-3 py-2 text-base font-medium text-gray-800 hover:text-blue-600 transition-colors duration-200"
+            class="block px-3 py-2 text-base font-medium text-gray-800 hover:text-yellow-300 transition-colors duration-200"
           >
             {{ link.name }}
           </router-link>
@@ -86,44 +107,7 @@
       </div>
     </transition>
   </nav>
+  </header>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue"
-import { NAV_LINKS } from "@/data/dummyData"
 
-const mobileMenuOpen = ref(false)
-const scrolled = ref(false)
-
-
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
-}
-const closeMobileMenu = () => {
-  mobileMenuOpen.value = false
-}
-
-const handleScroll = () => {
-  scrolled.value = window.scrollY > 0
-}
-
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll)
-  handleScroll()
-})
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll)
-})
-</script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

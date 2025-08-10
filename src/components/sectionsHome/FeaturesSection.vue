@@ -1,34 +1,7 @@
 <!-- FeaturesSection.vue -->
 <script setup lang="ts">
+import { FEATURES } from '@/data/homeData';
 import FeatureCard from './FeatureCard.vue'
-import { faGlobe, faPlane, faSearch } from '@fortawesome/free-solid-svg-icons'
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-
-// Definisikan tipe untuk props FeatureCard
-interface Feature {
-  icon: IconDefinition
-  title: string
-  description: string
-}
-
-// Data fitur
-const features: Feature[] = [
-  {
-    icon: faGlobe,
-    title: 'Global Snapshots',
-    description: 'Key details about every recognized country, always updated'
-  },
-  {
-    icon: faPlane,
-    title: 'Plan Your Adventure',
-    description: 'Insights that help you prepare or inspire your next trip.'
-  },
-  {
-    icon: faSearch,
-    title: 'Discover Cultures',
-    description: 'From languages to local currencies, learn what makes each place unique'
-  }
-]
 </script>
 
 <template>
@@ -39,7 +12,7 @@ const features: Feature[] = [
       </div>
       <div class="grid md:grid-cols-3 gap-8">
         <FeatureCard
-          v-for="feature in features"
+          v-for="feature in FEATURES"
           :key="feature.title"
           :icon="feature.icon"
           :title="feature.title"
