@@ -8,14 +8,7 @@ Search, filter, and explore countries with population, languages, currencies, an
 [![Vite](https://img.shields.io/badge/Vite-🔥-646CFF?style=for-the-badge&logo=vite)](https://vite.dev/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
----
 
-## 🚀 Live Preview
-
-[![Preview](https://i.ibb.co/0r6RkRJ/country-preview.png)](https://country-explorer-sage.vercel.app)  
-> Klik gambar untuk mencoba langsung.
-
----
 
 ## 🛠️ Tech Stack
 
@@ -25,7 +18,7 @@ Search, filter, and explore countries with population, languages, currencies, an
 - 🔍 **Vue Router** — Routing
 - ✅ **Vitest** — Unit testing
 
----
+
 
 ## 📦 Project Setup
 
