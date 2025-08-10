@@ -1,45 +1,46 @@
-# explore-countries
+# 🌍 Explore Countries
 
-This template should help get you started developing with Vue 3 in Vite.
+**Discover countries around the world** — built with **Vue 3 + Vite + Tailwind CSS**.  
+Search, filter, and explore countries with population, languages, currencies, and more.
 
-## Recommended IDE Setup
+[![Website](https://img.shields.io/badge/🌐_Live%20Demo-Visit-green?style=for-the-badge)](https://country-explorer-sage.vercel.app)
+[![Vue 3](https://img.shields.io/badge/Vue-3-42b883?style=for-the-badge&logo=vue.js)](https://vuejs.org/)
+[![Vite](https://img.shields.io/badge/Vite-🔥-646CFF?style=for-the-badge&logo=vite)](https://vite.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Type Support for `.vue` Imports in TS
+## 🚀 Live Preview
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+[![Preview](https://i.ibb.co/0r6RkRJ/country-preview.png)](https://country-explorer-sage.vercel.app)  
+> Klik gambar untuk mencoba langsung.
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## 🛠️ Tech Stack
 
-## Project Setup
+- ⚡ **Vite** — Fast development & build tool
+- 🖌 **Tailwind CSS** — Modern utility-first CSS framework
+- 🔄 **Pinia** — State management
+- 🔍 **Vue Router** — Routing
+- ✅ **Vitest** — Unit testing
+
+---
+
+## 📦 Project Setup
 
 ```sh
+# Install dependencies
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# Start development server
 npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+# Type-check, build & minify for production
 npm run build
-```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
+# Run Unit Tests
 npm run test:unit
-```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
+# Lint code
 npm run lint
-```
